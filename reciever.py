@@ -3,6 +3,7 @@ from network import WLAN
 import time, socket
 from machine import Timer
 
+#set up wifi
 wifi = WLAN(WLAN.IF_STA)
 wifi.active(True)
 
@@ -10,6 +11,7 @@ ssid = "LimaPhone"
 password = "12345678"
 wifi.connect(ssid, password)
 
+#set host + port + topic
 HOSTNAME = "172.20.10.2"
 PORT = 8080
 TOPIC = 'temp/pico'
@@ -21,8 +23,10 @@ mqtt = umqtt.MQTTClient(
         keepalive = 7000
 )
 
+#set the pico led
 led = machine.Pin('LED', machine.Pin.OUT)
 
+#confirm recieving 
 def callback(topic, message):
     print(f'I received the message "{message}" for topic "{topic}"')
     try:
@@ -42,4 +46,5 @@ def timer_callback(t):
     mqtt.wait_msg()
 
 timer = Timer()
+
 timer.init(freq = 0.5, mode=Timer.PERIODIC, callback = timer_callback)
