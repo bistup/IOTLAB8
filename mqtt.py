@@ -1,5 +1,7 @@
+#imports
 import umqtt.robust as umqtt
 
+#hostname and port topic
 HOSTNAME = '172.20.10.2'
 PORT = 8080
 TOPIC = 'temp/pico'
@@ -12,5 +14,6 @@ mqtt = umqtt.MQTTClient(
     )
 
 mqtt.connect()
+
 
 mqtt.publish(TOPIC, str("20").encode())
